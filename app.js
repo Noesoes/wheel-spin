@@ -32,7 +32,10 @@ const TEAMS = [
   ["LAR", "Los Angeles Rams", "NFC", "West", "#003594", "#FFA300"],
   ["SF", "San Francisco 49ers", "NFC", "West", "#AA0000", "#B3995D"],
   ["SEA", "Seattle Seahawks", "NFC", "West", "#002244", "#69BE28"],
-].map(([abbr, name, conf, div, color, accent]) => ({ abbr, name, conf, div, color, accent }));
+].map(([abbr, name, conf, div, color, accent]) => ({
+  abbr, name, conf, div, color, accent,
+  nickname: name.split(" ").pop().toUpperCase(),
+}));
 
 const TEAM_BY_NAME = new Map(TEAMS.map((t) => [t.name, t]));
 const TAU = Math.PI * 2;
@@ -174,7 +177,13 @@ function drawWheel() {
   }
 
   const slice = TAU / teams.length;
-  const fontSize = Math.max(14, Math.min(30, 560 / teams.length + 10));
+  // Short team code sits at the rim; the nickname is centered between the hub and the code,
+  // so every label lines up regardless of name length.
+  const abbrSize = Math.max(16, Math.min(40, 800 / teams.length));
+  const nickSize = Math.max(13, Math.min(30, 600 / teams.length));
+  const abbrEdge = radius - 24;
+  const nickInner = 104; // just outside the spin button
+  const nickOuter = abbrEdge - abbrSize * 2.4;
   const highlight = winner && !spinning && active.has(winner.name);
 
   teams.forEach((team, i) => {
@@ -201,11 +210,15 @@ function drawWheel() {
     ctx.save();
     ctx.translate(c, c);
     ctx.rotate(start + slice / 2);
-    ctx.textAlign = "right";
     ctx.textBaseline = "middle";
     ctx.fillStyle = textColorFor(team.color);
-    ctx.font = `bold ${fontSize}px system-ui, sans-serif`;
-    ctx.fillText(team.name, radius - 26, 0, radius * 0.68);
+    ctx.textAlign = "right";
+    ctx.font = `900 ${abbrSize}px system-ui, sans-serif`;
+    ctx.fillText(team.abbr, abbrEdge, 0);
+    ctx.textAlign = "center";
+    ctx.font = `700 ${nickSize}px system-ui, sans-serif`;
+    ctx.globalAlpha = 0.9;
+    ctx.fillText(team.nickname, (nickInner + nickOuter) / 2, 0, nickOuter - nickInner);
     ctx.restore();
 
     if (highlight && team.name !== winner.name) {
