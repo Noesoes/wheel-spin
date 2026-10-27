@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NFL Team Wheel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>NFL Team Wheel</h1>
+  <p class="sub">Spin to pick a random NFL team</p>
+</header>
+
+<main>
+  <section class="wheel-area">
+    <div class="wheel-wrap">
+      <div class="pointer" aria-hidden="true"></div>
+      <canvas id="wheel" width="800" height="800" aria-label="Wheel of NFL teams"></canvas>
+      <button id="spin" class="spin-btn">SPIN</button>
+    </div>
+    <div id="result" class="result" aria-live="polite">&nbsp;</div>
+    <div class="controls">
+      <label><input type="checkbox" id="removeWinner"> Remove winner after each spin</label>
+      <button id="reset" class="secondary">Reset teams</button>
+    </div>
+  </section>
+
+  <aside class="teams">
+    <div class="teams-head">
+      <h2>Teams <span id="count"></span></h2>
+      <div class="filters">
+        <button data-filter="all" class="secondary">All</button>
+        <button data-filter="AFC" class="secondary">AFC</button>
+        <button data-filter="NFC" class="secondary">NFC</button>
+        <button data-filter="none" class="secondary">None</button>
+      </div>
+    </div>
+    <div id="teamList"></div>
+  </aside>
+</main>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-card">
+    <p class="modal-label">The wheel picked</p>
+    <div id="modalTeam" class="modal-team"></div>
+    <button id="closeModal">Nice!</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
