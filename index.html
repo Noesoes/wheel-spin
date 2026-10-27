@@ -3,50 +3,71 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1220">
 <title>NFL Team Wheel</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏈</text></svg>">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
   <h1>NFL Team Wheel</h1>
-  <p class="sub">Spin to pick a random NFL team</p>
+  <p class="sub">Tap spin, flick the wheel, or press Space</p>
 </header>
 
 <main>
   <section class="wheel-area">
     <div class="wheel-wrap">
-      <div class="pointer" aria-hidden="true"></div>
-      <canvas id="wheel" width="800" height="800" aria-label="Wheel of NFL teams"></canvas>
+      <div class="pointer" id="pointer" aria-hidden="true"></div>
+      <canvas id="wheel" aria-label="Wheel of NFL teams"></canvas>
       <button id="spin" class="spin-btn">SPIN</button>
     </div>
     <div id="result" class="result" aria-live="polite">&nbsp;</div>
     <div class="controls">
       <label><input type="checkbox" id="removeWinner"> Remove winner after each spin</label>
+      <button id="sound" class="secondary" aria-pressed="true">🔊 Sound on</button>
       <button id="reset" class="secondary">Reset teams</button>
     </div>
+
+    <section class="card history">
+      <div class="card-head">
+        <h2>Spin history</h2>
+        <button id="clearHistory" class="secondary small">Clear</button>
+      </div>
+      <ol id="historyList"></ol>
+      <p id="historyEmpty" class="empty">No spins yet.</p>
+    </section>
   </section>
 
-  <aside class="teams">
-    <div class="teams-head">
+  <aside class="card teams">
+    <div class="card-head">
       <h2>Teams <span id="count"></span></h2>
-      <div class="filters">
-        <button data-filter="all" class="secondary">All</button>
-        <button data-filter="AFC" class="secondary">AFC</button>
-        <button data-filter="NFC" class="secondary">NFC</button>
-        <button data-filter="none" class="secondary">None</button>
-      </div>
+    </div>
+    <div class="filters">
+      <button data-filter="all" class="secondary small">All</button>
+      <button data-filter="AFC" class="secondary small">AFC</button>
+      <button data-filter="NFC" class="secondary small">NFC</button>
+      <button data-filter="none" class="secondary small">None</button>
     </div>
     <div id="teamList"></div>
   </aside>
 </main>
 
 <div id="modal" class="modal" hidden>
-  <div class="modal-card">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTeam">
     <p class="modal-label">The wheel picked</p>
-    <div id="modalTeam" class="modal-team"></div>
-    <button id="closeModal">Nice!</button>
+    <div id="modalBadge" class="modal-badge">
+      <div id="modalAbbr" class="modal-abbr"></div>
+      <div id="modalTeam" class="modal-team"></div>
+      <div id="modalDiv" class="modal-div"></div>
+    </div>
+    <div class="modal-actions">
+      <button id="spinAgain">Spin again</button>
+      <button id="closeModal" class="secondary">Close</button>
+    </div>
   </div>
 </div>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
 
 <script src="app.js"></script>
 </body>

@@ -2,7 +2,9 @@
 
 A spin-the-wheel web app with all 32 NFL teams.
 
-- Click **SPIN** to pick a random team
+- Click **SPIN**, flick the wheel, or press Space to pick a random team
+- Tick sounds, confetti in the winning team's colors, and a spin history
+- Your team selection, settings and history are saved in the browser
 - Filter by conference (AFC/NFC) or toggle individual teams
 - Optionally remove each winner from the wheel after it's picked
 
